@@ -137,25 +137,38 @@ View(Rad_Vel)
 
 # Ena Sudeste
 Ena_se_u <- Ena_se
-Ena_se_u <- rank(Ena_se,ties.method = "random")/(length(Ena_se)+1)
+#Ena_se_u <- rank(Ena_se,ties.method = "random")/(length(Ena_se)+1)
+Ena_se_u <- rank(Ena_se,ties.method = "random")/60
 Ena_se_u <- data.matrix(Ena_se_u)
 view(Ena_se_u)
 #
 # Velocidade do Vento RN
 Vel_RN_u <- Vel_RN
-Vel_RN_u <- rank(Vel_RN,ties.method = "random")/(length(Vel_RN)+1)
+#Vel_RN_u <- rank(Vel_RN,ties.method = "random")/(length(Vel_RN)+1)
+Vel_RN_u <- rank(Vel_RN,ties.method = "random")/60
 Vel_RN_u <- data.matrix(Vel_RN_u)
 view(Vel_RN_u)
 #
 # Radiação MG
 Rad_MG_u <- Rad_MG
-Rad_MG_u <- rank(Rad_MG,ties.method = "random")/(length(Rad_MG)+1)
+#Rad_MG_u <- rank(Rad_MG,ties.method = "random")/(length(Rad_MG)+1)
+Rad_MG_u <- rank(Rad_MG,ties.method = "random")/60
 Rad_MG_u <- data.matrix(Rad_MG_u)
 #
 # Fitting Archimedean Copula
-gumbel_object <- gumbelCopula(dim = 3)
-copula_data <- c(Ena_se_u,Vel_RN_u,Rad_MG_u)
-copula_data <- data.matrix(copula_data)
+#gumbel_object <- gumbelCopula(dim = 3)
+clayton_object <- claytonCopula(dim =3)
+gaussian_object <- normalCopula(dim=3)
+copula_data <- matrix(,nrow = 60,ncol = 3)
+copula_data[,1] <- Ena_se_u
+copula_data[,2] <- Vel_RN_u
+copula_data[,3] <- Rad_MG_u
 view(copula_data)
-fitted_gumbel_ml <- fitCopula(gumbel_object,copula_data,method = "ml")
-fitted_gumbel_ml
+#copula_data <- data.matrix(copula_data)
+fitted_clayton_itau <- fitCopula(clayton_object,copula_data[,1:3],method = "itau")
+fitted_clayton_itau
+summary(fitted_clayton_itau)
+gaussian_object <- normalCopula(dim=3)
+fitted_gaussian_itau <- fitCopula(gaussian_object,copula_data[,1:3],method = "itau")
+fitted_gaussian_itau
+summary(fitted_gaussian_itau)
