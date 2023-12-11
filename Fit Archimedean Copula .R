@@ -139,6 +139,7 @@ View(Rad_Vel)
 Ena_se_u <- Ena_se
 Ena_se_u <- rank(Ena_se,ties.method = "random")/(length(Ena_se)+1)
 Ena_se_u <- data.matrix(Ena_se_u)
+view(Ena_se_u)
 #
 # Velocidade do Vento RN
 Vel_RN_u <- Vel_RN
@@ -154,6 +155,7 @@ Rad_MG_u <- data.matrix(Rad_MG_u)
 # Fitting Archimedean Copula
 gumbel_object <- gumbelCopula(dim = 3)
 copula_data <- c(Ena_se_u,Vel_RN_u,Rad_MG_u)
+copula_data <- data.matrix(copula_data)
 view(copula_data)
 fitted_gumbel_ml <- fitCopula(gumbel_object,copula_data,method = "ml")
 fitted_gumbel_ml
