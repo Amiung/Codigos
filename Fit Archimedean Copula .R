@@ -60,12 +60,9 @@ Vel_PI <- data.matrix(dados_eol_PI[1:60,2])
 
 #-----Análise descritiva dos dados
 #
-# Gráficos de Dispersão
-#
-#Ena x Radiação
-dados <- data.frame(Ena_se,Rad_BA)
-ggplot(dados,aes(y=Ena_se, x=Radiação_BA))+geom_point()
-#-----Calculo Correlação
+
+
+#-----Calculo da Dependência entre as variáveis (Kendall Tau)
 #
 # ENA x Radiação 
 K_tau_se_sol_BA <- cor(Ena_se,Rad_BA, method = "kendall")
@@ -123,7 +120,7 @@ col_2 <- c(K_tau_se_sol_MG, K_tau_ne_sol_MG, K_tau_s_sol_MG, K_tau_n_sol_MG)
 col_3 <- c(K_tau_se_sol_BA, K_tau_ne_sol_BA, K_tau_s_sol_BA, K_tau_n_sol_BA)
 col_4 <- c(K_tau_se_sol_PI, K_tau_ne_sol_PI, K_tau_s_sol_PI, K_tau_n_sol_PI)
 Ena_Rad <- data_frame(Kendall_Tau = col_1, Radiação_MG = col_2, Radiação_BA = col_3, Radiação_PI = col_4)
-View(Ena_Rad)
+#View(Ena_Rad)
 #
 # ENA x Velocidade do Vento
 col_1 <- c("Ena_SE", "ENA_NE", "ENA_S", "ENA_N")
@@ -140,6 +137,83 @@ col_3 <- c(k_tau_eol_BA_sol_MG, k_tau_eol_BA_sol_BA, k_tau_eol_BA_sol_PI)
 col_4 <- c(k_tau_eol_RN_sol_MG, k_tau_eol_RN_sol_BA, k_tau_eol_RN_sol_PI)
 Rad_Vel <- data_frame(Kendall_Tau = col_1, Vel_Vento_PI = col_2, Vel_Vento_BA = col_3, Vel_Vento_RN = col_4)
 #View(Rad_Vel)
+#
+# Gráficos de Dispersão
+#
+#Ena x Radiação
+
+dados <- data.frame(Ena_se,Rad_BA)#1
+ggplot(dados,aes(y=Ena_se, x=Radiação_BA))+geom_point(pch=21,col="red",fill="red")
+
+dados <- data.frame(Ena_se,Rad_PI)#2
+ggplot(dados,aes(y=Ena_se, x=Radiação_PI))+geom_point(pch=21,col="red",fill="blue")
+
+dados <- data.frame(Ena_se,Rad_MG)#3
+ggplot(dados,aes(y=Ena_se, x=Radiação_MG))+geom_point(pch=21,col="red",fill="green")
+
+#Ena x Velocidade do Vento
+
+dados <- data.frame(Ena_se,Vel_BA)#1
+ggplot(dados,aes(y=Ena_se, x=Vel_Vento_BA))+geom_point(pch=21,col="red",fill="red")
+
+dados <- data.frame(Ena_se,Vel_PI)#2
+ggplot(dados,aes(y=Ena_se, x=Vel_Vento_PI))+geom_point(pch=21,col="red",fill="blue")
+
+dados <- data.frame(Ena_se,Vel_RN)#3
+ggplot(dados,aes(y=Ena_se, x=Vel_Vento_RN))+geom_point(pch=21,col="red",fill="green")
+
+#Radiação x Velocidade do Vento
+
+dados <- data.frame(Rad_BA,Vel_BA)#1
+ggplot(dados,aes(y=Radiação_BA, x=Vel_Vento_BA))+geom_point(pch=21,col="red",fill="red")
+
+dados <- data.frame(Rad_PI,Vel_PI)#2
+ggplot(dados,aes(y=Radiação_PI, x=Vel_Vento_PI))+geom_point(pch=21,col="red",fill="blue")
+
+dados <- data.frame(Rad_MG,Vel_RN)#3
+ggplot(dados,aes(y=Radiação_MG, x=Vel_Vento_RN))+geom_point(pch=21,col="red",fill="green")
+
+dados <- data.frame(Rad_BA,Vel_PI)#4
+ggplot(dados,aes(y=Radiação_BA, x=Vel_Vento_PI))+geom_point(pch=21,col="red",fill="red")
+
+dados <- data.frame(Rad_BA,Vel_RN)#5
+ggplot(dados,aes(y=Radiação_BA, x=Vel_Vento_RN))+geom_point(pch=21,col="red",fill="red")
+
+dados <- data.frame(Rad_MG,Vel_BA)#6
+ggplot(dados,aes(y=Radiação_MG, x=Vel_Vento_BA))+geom_point(pch=21,col="red",fill="red")
+
+dados <- data.frame(Rad_MG,Vel_PI)#7
+ggplot(dados,aes(y=Radiação_MG, x=Vel_Vento_PI))+geom_point(pch=21,col="red",fill="red")
+
+dados <- data.frame(Rad_PI,Vel_BA)#8
+ggplot(dados,aes(y=Radiação_PI, x=Vel_Vento_BA))+geom_point(pch=21,col="red",fill="red")
+
+dados <- data.frame(Rad_PI,Vel_RN)#9
+ggplot(dados,aes(y=Radiação_PI, x=Vel_Vento_RN))+geom_point(pch=21,col="red",fill="red")
+
+#
+#Radiação x Radiação
+
+dados <- data.frame(Rad_MG,Rad_BA)#1
+ggplot(dados,aes(y=Radiação_MG, x=Radiação_BA))+geom_point(pch=21,col="red",fill="red")
+
+dados <- data.frame(Rad_MG,Rad_PI)#2
+ggplot(dados,aes(y=Radiação_MG, x=Radiação_PI))+geom_point(pch=21,col="red",fill="blue")
+
+dados <- data.frame(Rad_BA,Rad_PI)#3
+ggplot(dados,aes(y=Radiação_BA, x=Radiação_PI))+geom_point(pch=21,col="red",fill="green")
+
+#
+#Velocidade do Vento x Velecidade do Vento
+
+dados <- data.frame(Vel_PI,Vel_BA)#1
+ggplot(dados,aes(y=Vel_Vento_PI_MG, x=Vel_Vento_BA))+geom_point(pch=21,col="red",fill="red")
+
+dados <- data.frame(Vel_PI,Vel_RN)#2
+ggplot(dados,aes(y=Vel_Vento_PI, x=Vel_Vento_RN))+geom_point(pch=21,col="red",fill="blue")
+
+dados <- data.frame(Vel_BA,Vel_RN)#3
+ggplot(dados,aes(y=Vel_Vento_BA, x=Vel_Vento_RN))+geom_point(pch=21,col="red",fill="green")
 #
 #---- Criando funções de distribuição empirica para os dados
 #
