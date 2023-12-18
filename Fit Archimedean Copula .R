@@ -44,16 +44,16 @@ head(dados_eol_BA)
 head(dados_eol_RN)
 head(dados_eol_PI)
 #
-Ena_se <- dados_se[1:60,3]
-Ena_s <- dados_s[1:60,3]
-Ena_ne <- dados_ne[1:60,3]
-Ena_n <- dados_n[1:60,3]
-Rad_BA <- dados_sol_BA[1:60,2]
-Rad_MG <- dados_sol_MG[1:60,2]
-Rad_PI <- dados_sol_PI[1:60,2]
-Vel_BA <- dados_eol_BA[1:60,2]
-Vel_RN <- dados_eol_RN[1:60,2]
-Vel_PI <- dados_eol_PI[1:60,2]
+Ena_se <- data.matrix(dados_se[1:60,3])
+Ena_s <- data.matrix(dados_s[1:60,3])
+Ena_ne <- data.matrix(dados_ne[1:60,3])
+Ena_n <- data.matrix(dados_n[1:60,3])
+Rad_BA <- data.matrix(dados_sol_BA[1:60,2])
+Rad_MG <- data.matrix(dados_sol_MG[1:60,2])
+Rad_PI <- data.matrix(dados_sol_PI[1:60,2])
+Vel_BA <- data.matrix(dados_eol_BA[1:60,2])
+Vel_RN <- data.matrix(dados_eol_RN[1:60,2])
+Vel_PI <- data.matrix(dados_eol_PI[1:60,2])
 #
 #Calculo Correlação
 #
@@ -113,7 +113,7 @@ col_2 <- c(K_tau_se_sol_MG, K_tau_ne_sol_MG, K_tau_s_sol_MG, K_tau_n_sol_MG)
 col_3 <- c(K_tau_se_sol_BA, K_tau_ne_sol_BA, K_tau_s_sol_BA, K_tau_n_sol_BA)
 col_4 <- c(K_tau_se_sol_PI, K_tau_ne_sol_PI, K_tau_s_sol_PI, K_tau_n_sol_PI)
 Ena_Rad <- data_frame(Kendall_Tau = col_1, Radiação_MG = col_2, Radiação_BA = col_3, Radiação_PI = col_4)
-View(Ena_Rad)
+#View(Ena_Rad)
 #
 # ENA x Velocidade do Vento
 col_1 <- c("Ena_SE", "ENA_NE", "ENA_S", "ENA_N")
@@ -121,7 +121,7 @@ col_2 <- c(K_tau_se_eol_RN, K_tau_ne_eol_RN, K_tau_s_eol_RN, K_tau_n_eol_RN)
 col_3 <- c(K_tau_se_eol_BA, K_tau_ne_eol_BA, K_tau_s_eol_BA, K_tau_n_eol_BA)
 col_4 <- c(K_tau_se_eol_PI, K_tau_ne_eol_PI, K_tau_s_eol_PI, K_tau_n_eol_PI)
 Ena_Vel <- data_frame(Kendall_Tau = col_1, Vel_Vento_RN = col_2, Vel_Vento_BA = col_3, Vel_Vento_PI = col_4)
-View(Ena_Vel)
+#View(Ena_Vel)
 #
 # Radiaçao x Velocidade do Vento
 col_1 <- c("Radiação_MG", "Radiação_BA", "Radiação_PI")
@@ -129,7 +129,7 @@ col_2 <- c(k_tau_eol_PI_sol_MG, K_tau_ne_eol_RN, k_tau_eol_PI_sol_PI)
 col_3 <- c(k_tau_eol_BA_sol_MG, k_tau_eol_BA_sol_BA, k_tau_eol_BA_sol_PI)
 col_4 <- c(k_tau_eol_RN_sol_MG, k_tau_eol_RN_sol_BA, k_tau_eol_RN_sol_PI)
 Rad_Vel <- data_frame(Kendall_Tau = col_1, Vel_Vento_PI = col_2, Vel_Vento_BA = col_3, Vel_Vento_RN = col_4)
-View(Rad_Vel)
+#View(Rad_Vel)
 #
 #---- Criando funções de distribuição empirica para os dados
 #
@@ -137,34 +137,29 @@ View(Rad_Vel)
 
 # Ena Sudeste
 Ena_se_u <- Ena_se
-#Ena_se_u <- rank(Ena_se,ties.method = "random")/(length(Ena_se)+1)
-Ena_se_u <- rank(Ena_se,ties.method = "random")/60
+Ena_se_u <- rank(Ena_se,ties.method = "random")/(length(Ena_se)+1)
 Ena_se_u <- data.matrix(Ena_se_u)
-view(Ena_se_u)
+#view(Ena_se_u)
 #
 # Velocidade do Vento RN
 Vel_RN_u <- Vel_RN
-#Vel_RN_u <- rank(Vel_RN,ties.method = "random")/(length(Vel_RN)+1)
-Vel_RN_u <- rank(Vel_RN,ties.method = "random")/60
+Vel_RN_u <- rank(Vel_RN,ties.method = "random")/(length(Vel_RN)+1)
 Vel_RN_u <- data.matrix(Vel_RN_u)
-view(Vel_RN_u)
+#view(Vel_RN_u)
 #
 # Radiação MG
 Rad_MG_u <- Rad_MG
-#Rad_MG_u <- rank(Rad_MG,ties.method = "random")/(length(Rad_MG)+1)
-Rad_MG_u <- rank(Rad_MG,ties.method = "random")/60
+Rad_MG_u <- rank(Rad_MG,ties.method = "random")/(length(Rad_MG)+1)
 Rad_MG_u <- data.matrix(Rad_MG_u)
 #
 # Fitting Archimedean Copula
-#gumbel_object <- gumbelCopula(dim = 3)
 clayton_object <- claytonCopula(dim =3)
 gaussian_object <- normalCopula(dim=3)
 copula_data <- matrix(,nrow = 60,ncol = 3)
 copula_data[,1] <- Ena_se_u
 copula_data[,2] <- Vel_RN_u
 copula_data[,3] <- Rad_MG_u
-view(copula_data)
-#copula_data <- data.matrix(copula_data)
+#view(copula_data)
 fitted_clayton_itau <- fitCopula(clayton_object,copula_data[,1:3],method = "itau")
 fitted_clayton_itau
 summary(fitted_clayton_itau)
