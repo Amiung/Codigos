@@ -13,7 +13,9 @@ library(copula)
 library(MASS)
 install.packages("xlsx")
 library(xlsx)
-
+library(ggplot2)
+install.packages("ggpmisc")
+library(ggpmisc)
 ############################
 #
 #---- Diretorio Leitura dos dados
@@ -55,7 +57,15 @@ Vel_BA <- data.matrix(dados_eol_BA[1:60,2])
 Vel_RN <- data.matrix(dados_eol_RN[1:60,2])
 Vel_PI <- data.matrix(dados_eol_PI[1:60,2])
 #
-#Calculo Correlação
+
+#-----Análise descritiva dos dados
+#
+# Gráficos de Dispersão
+#
+#Ena x Radiação
+dados <- data.frame(Ena_se,Rad_BA)
+ggplot(dados,aes(y=Ena_se, x=Radiação_BA))+geom_point()
+#-----Calculo Correlação
 #
 # ENA x Radiação 
 K_tau_se_sol_BA <- cor(Ena_se,Rad_BA, method = "kendall")
@@ -113,7 +123,7 @@ col_2 <- c(K_tau_se_sol_MG, K_tau_ne_sol_MG, K_tau_s_sol_MG, K_tau_n_sol_MG)
 col_3 <- c(K_tau_se_sol_BA, K_tau_ne_sol_BA, K_tau_s_sol_BA, K_tau_n_sol_BA)
 col_4 <- c(K_tau_se_sol_PI, K_tau_ne_sol_PI, K_tau_s_sol_PI, K_tau_n_sol_PI)
 Ena_Rad <- data_frame(Kendall_Tau = col_1, Radiação_MG = col_2, Radiação_BA = col_3, Radiação_PI = col_4)
-#View(Ena_Rad)
+View(Ena_Rad)
 #
 # ENA x Velocidade do Vento
 col_1 <- c("Ena_SE", "ENA_NE", "ENA_S", "ENA_N")
