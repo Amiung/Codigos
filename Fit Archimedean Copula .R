@@ -207,7 +207,7 @@ ggplot(dados,aes(y=Radiação_BA, x=Radiação_PI))+geom_point(pch=21,col="red",
 #Velocidade do Vento x Velecidade do Vento
 
 dados <- data.frame(Vel_PI,Vel_BA)#1
-ggplot(dados,aes(y=Vel_Vento_PI_MG, x=Vel_Vento_BA))+geom_point(pch=21,col="red",fill="red")
+ggplot(dados,aes(y=Vel_Vento_PI, x=Vel_Vento_BA))+geom_point(pch=21,col="red",fill="red")
 
 dados <- data.frame(Vel_PI,Vel_RN)#2
 ggplot(dados,aes(y=Vel_Vento_PI, x=Vel_Vento_RN))+geom_point(pch=21,col="red",fill="blue")
